@@ -114,8 +114,8 @@ Class MnEtForumPostInit Extends AppDo {
         $retStr = $content;
         $retStr = preg_replace('/\[url=([^\]]*?)\]([^\[]*?)\[\/url\]/i', '<a href="$1">$2</a>', $retStr);  //convert url bbcode
         $retStr = preg_replace('/\[img\]([^\[]*?)\[\/img\]/i', '<a href="$1" target="_blank"><img src="$1" /></a>', $retStr);  //convert img bbcode
-        $retStr = preg_replace('/\[quote\]/i', '<br />&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;', $retStr);  //convert quote bbcode
-        $retStr = preg_replace('/\[\/quote\]/i', '<br />&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;', $retStr);  //convert quote bbcode
+        $retStr = preg_replace('/\[quote\]/i', '<br />&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br />', $retStr);  //convert quote bbcode
+        $retStr = preg_replace('/\[\/quote\]/i', '<br />&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br />', $retStr);  //convert quote bbcode
         //convert smileys
         //TODO for different type site
         if (MainBase::apiIsVanilla2Site()) {
