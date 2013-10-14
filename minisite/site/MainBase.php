@@ -67,7 +67,7 @@ Abstract Class MainBase extends MainApp {
             if (self::apiIsVanilla2Site()) {
                 $tapatalkPluginApiConfig['nativeSitePcModeUrl'] = $tapatalkPluginApiConfig['nativeSiteUrl'].'profile/nomobile';
             } elseif (self::apiIsVbulletin3Site()) {
-                $tapatalkPluginApiConfig['nativeSitePcModeUrl'] = $tapatalkPluginApiConfig['nativeSiteUrl'];
+                $tapatalkPluginApiConfig['nativeSitePcModeUrl'] = $tapatalkPluginApiConfig['nativeSiteUrl'].'index.php?exttMbqNoMobile=1';
             } else {
                 Error::alert('unknownTypeSite', __METHOD__ . ',line:' . __LINE__ . '.' . "Unknown type site.", ERR_TOP);
             }

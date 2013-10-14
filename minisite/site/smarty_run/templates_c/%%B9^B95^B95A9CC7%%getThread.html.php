@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.27, created on 2013-10-10 20:57:34
+<?php /* Smarty version 2.6.27, created on 2013-10-11 15:11:33
          compiled from getThread.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'tplEchoUrl', 'getThread.html', 9, false),array('modifier', 'escape', 'getThread.html', 9, false),array('modifier', 'date_format', 'getThread.html', 31, false),)), $this); ?>
