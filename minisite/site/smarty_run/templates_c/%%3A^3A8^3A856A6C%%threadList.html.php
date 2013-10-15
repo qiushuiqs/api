@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.27, created on 2013-10-10 20:58:38
+<?php /* Smarty version 2.6.27, created on 2013-10-15 15:26:46
          compiled from threadList.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'tplEchoUrl', 'threadList.html', 8, false),array('modifier', 'escape', 'threadList.html', 23, false),array('modifier', 'date_format', 'threadList.html', 27, false),)), $this); ?>
@@ -25,7 +25,7 @@ unset($_smarty_tpl_vars);
     foreach ($_from as $this->_tpl_vars['oMnEtForumTopic']):
 ?>
 <li class="Item">
-      <?php if ($this->_tpl_vars['oMnEtForumTopic']->oAuthorMnEtUser->iconUrl->hasSetOriValue()): ?>
+      <?php if ($this->_tpl_vars['oMnEtForumTopic']->oAuthorMnEtUser && $this->_tpl_vars['oMnEtForumTopic']->oAuthorMnEtUser->iconUrl->hasSetOriValue()): ?>
       <a title="<?php echo $this->_tpl_vars['oMnEtForumTopic']->oAuthorMnEtUser->getDisplayName(); ?>
 " href="#" class="ProfileLink"><img src="<?php echo $this->_tpl_vars['oMnEtForumTopic']->oAuthorMnEtUser->iconUrl->oriValue; ?>
 " alt="<?php echo $this->_tpl_vars['oMnEtForumTopic']->oAuthorMnEtUser->getDisplayName(); ?>

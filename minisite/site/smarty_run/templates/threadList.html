@@ -16,7 +16,7 @@
 		  <ul class="DataList Discussions">
 		    {foreach from=$data.topics item=oMnEtForumTopic}
 <li class="Item">
-      {if $oMnEtForumTopic->oAuthorMnEtUser->iconUrl->hasSetOriValue()}
+      {if $oMnEtForumTopic->oAuthorMnEtUser && $oMnEtForumTopic->oAuthorMnEtUser->iconUrl->hasSetOriValue()}
       <a title="{$oMnEtForumTopic->oAuthorMnEtUser->getDisplayName()}" href="#" class="ProfileLink"><img src="{$oMnEtForumTopic->oAuthorMnEtUser->iconUrl->oriValue}" alt="{$oMnEtForumTopic->oAuthorMnEtUser->getDisplayName()}" class="ProfilePhotoMedium" style="overflow:hidden" /></a>
       {/if}
       <div class="ItemContent Discussion">
