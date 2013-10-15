@@ -80,7 +80,7 @@ Abstract Class MainBase extends MainApp {
      *
      * @return  Boolean
      */
-    public function apiIsVanilla2Site() {
+    public static function apiIsVanilla2Site() {
         $arr = explode("_", self::$tapatalkPluginApiConfig['apiConfig']->version);
         return (($arr[0] === 'vn20') ? true : false);
     }
@@ -90,7 +90,7 @@ Abstract Class MainBase extends MainApp {
      *
      * @return  Boolean
      */
-    public function apiIsVbulletin3Site() {
+    public static function apiIsVbulletin3Site() {
         $arr = explode("_", self::$tapatalkPluginApiConfig['apiConfig']->version);
         return (($arr[0] === 'vb3x') ? true : false);
     }
@@ -236,7 +236,7 @@ Abstract Class MainBase extends MainApp {
      *
      * @return  Boolean
      */
-    final public function hasLogin() {
+    final public static function hasLogin() {
         return false;
     }
     
