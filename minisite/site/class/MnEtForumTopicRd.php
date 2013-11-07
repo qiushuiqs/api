@@ -50,7 +50,7 @@ Class MnEtForumTopicRd Extends AppDo {
             $retData['oMnDataPage'] = $oMnDataPage;
             return $retData;
         } else {
-            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_TOP);
+            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_HIGH);
         }
     }
     
@@ -87,7 +87,7 @@ Class MnEtForumTopicRd Extends AppDo {
             $retData['oMnDataPage'] = $oMnDataPage;
             return $retData;
         } else {
-            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_TOP);
+            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_HIGH);
         }
     }
     

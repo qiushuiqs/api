@@ -25,7 +25,7 @@ require_once(MPFFRAME_PATH.'class/AppConfigBase.php');  /* 包含模块配置基
 define('MPF_IN_IT', TRUE);    /* judge is in mpf */
 define('MPF_C_MAIN_HOMEDOMAIN', $_SERVER['HTTP_HOST']);    /* 主站域名 */
 define('MPF_C_HOMEDOMAIN', $_SERVER['HTTP_HOST']);    /* 模块域名 */
-define('MPF_C_PREURL', (strrpos($_SERVER['REQUEST_URI'], '/') === 0) ? '/' : substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')));    /* !!! 模块URL前缀 */
+define('MPF_C_PREURL', (strrpos($_SERVER['REQUEST_URI'], '/') === 0) ? '' : substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')));    /* !!! 模块URL前缀（含模块目录名），如果没有前缀则返回空的字符串。 */
 define('MPF_C_COOKIE_DOMAIN', '.'.$_SERVER['HTTP_HOST']);    /* 网站cookie域 */
 define('MPF_C_COOKIE_LEFT_TIME', 0);    /* cookie有效期 */
 define('MPF_C_COOKIE_PATH', '/');    /* cookie路径 */
@@ -52,7 +52,8 @@ define('MPF_C_APP_CLASS_PATH_ITFCLIENT', $oCf->getPath('../publicClass/interface
 define('MPF_C_APP_WRPRIVATE_PATH', $oCf->getPath('../wrDir/private/'.strtolower(MPF_C_APPNAME).'/'));    /* 模块私有写目录路径 */
 define('MPF_C_APP_WRPUBLIC_PATH', $oCf->getPath('../wrDir/public/'.strtolower(MPF_C_APPNAME).'/'));    /* 模块公共写目录路径 */
 define('MPF_C_APP_WRPUBLIC_URL', '../wrDir/public/'.strtolower(MPF_C_APPNAME).'/');    /* 模块公共写目录web路径 */
-define('MPF_C_TBPREFIX', 'mpf_');    /* 数据库表名前缀 */
+define('MPF_C_APP_DB_CONNECTION_TYPE', 'mysqli');    /* db连接类型（mysql/mysqli） */
+define('MPF_C_APP_TBPREFIX', 'mpf_');    /* 数据库表名前缀 */
 define('MPF_C_TIMEZONE', 'PRC');    /* 时区 */
 date_default_timezone_set(MPF_C_TIMEZONE);
 /* 其他 */
@@ -75,7 +76,8 @@ $mpf_config = array (
         MPF_C_APPNAME_SITE => array (   /* SITE模块 */
             'appName' => MPF_C_APPNAME_SITE,    /* 模块名 */
             'domain' => MPF_C_HOMEDOMAIN, /* 模块所在域名 */
-            'dir' => 'site'    /* 模块所在目录 */
+            'dir' => 'site',    /* 模块所在目录 */
+            'preurl' => MPF_C_PREURL    /* 模块url前缀（含模块目录名） */
         )
     )
 );

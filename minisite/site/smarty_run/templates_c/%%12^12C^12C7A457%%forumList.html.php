@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.27, created on 2013-10-10 20:58:29
+<?php /* Smarty version 2.6.27, created on 2013-11-07 13:02:51
          compiled from forumList.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'tplEchoUrl', 'forumList.html', 8, false),array('modifier', 'escape', 'forumList.html', 20, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'tplEchoUrl', 'forumList.html', 8, false),array('modifier', 'escape', 'forumList.html', 16, false),)), $this); ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "public_header.html", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
@@ -13,11 +13,7 @@ unset($_smarty_tpl_vars);
 		<ul>
 		  <li><a href="<?php echo smarty_function_tplEchoUrl(array('mainName' => 'MainForum.php','cmd' => 'forumList'), $this);?>
 " class="" style="font-size:16px;">All Forums</a></li>
-		  
-		  
-		  
-		  
-		  		</ul>
+		</ul>
 	 </div>
 	 <div id="Body">
 		<div id="Content">
@@ -26,8 +22,9 @@ unset($_smarty_tpl_vars);
     foreach ($_from as $this->_tpl_vars['oMnEtForum']):
 ?>
     <li class="Item Depth1 Unread">
-               <div class="ItemContent Category Unread"><a href="<?php echo smarty_function_tplEchoUrl(array('mainName' => 'MainTopic.php','cmd' => 'threadList','vName' => 'fid','vValue' => $this->_tpl_vars['oMnEtForum']->forumId->oriValue), $this);?>
-" class="Title" style="font-size:16px;"><?php echo ((is_array($_tmp=$this->_tpl_vars['oMnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+               <div class="ItemContent Category Unread"><a href="<?php echo $this->_tpl_vars['oMnEtForum']->getForumUrl(); ?>
+" class="Title" style="font-size:16px;word-break:break-all;word-wrap:break-word;" title="<?php echo ((is_array($_tmp=$this->_tpl_vars['oMnEtForum']->getForumUrlTitle())) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+"><?php echo ((is_array($_tmp=$this->_tpl_vars['oMnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </a><div class="CategoryDescription"><?php echo ((is_array($_tmp=$this->_tpl_vars['oMnEtForum']->description->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </div><div class="Meta">
                      <span class="DiscussionCount"><?php echo $this->_tpl_vars['oMnEtForum']->totalTopicNum->oriValue; ?>
@@ -39,8 +36,9 @@ unset($_smarty_tpl_vars);
     foreach ($_from as $this->_tpl_vars['oLv2MnEtForum']):
 ?>
     <li class="Item Depth2 Read">
-               <div class="ItemContent Category Read"><a href="<?php echo smarty_function_tplEchoUrl(array('mainName' => 'MainTopic.php','cmd' => 'threadList','vName' => 'fid','vValue' => $this->_tpl_vars['oLv2MnEtForum']->forumId->oriValue), $this);?>
-" class="Title" style="font-size:16px;"><?php echo ((is_array($_tmp=$this->_tpl_vars['oLv2MnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+               <div class="ItemContent Category Read"><a href="<?php echo $this->_tpl_vars['oLv2MnEtForum']->getForumUrl(); ?>
+" class="Title" style="font-size:16px;word-break:break-all;word-wrap:break-word;" title="<?php echo ((is_array($_tmp=$this->_tpl_vars['oLv2MnEtForum']->getForumUrlTitle())) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
+"><?php echo ((is_array($_tmp=$this->_tpl_vars['oLv2MnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </a><div class="CategoryDescription"><?php echo ((is_array($_tmp=$this->_tpl_vars['oLv2MnEtForum']->description->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </div><div class="Meta">
                      <span class="DiscussionCount"><?php echo $this->_tpl_vars['oLv2MnEtForum']->totalTopicNum->oriValue; ?>
@@ -50,19 +48,22 @@ unset($_smarty_tpl_vars);
                         <?php $_from = $this->_tpl_vars['oLv2MnEtForum']->objsSubMnEtForum; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['oLv3MnEtForum']):
 ?>
-                        <a href="<?php echo smarty_function_tplEchoUrl(array('mainName' => 'MainTopic.php','cmd' => 'threadList','vName' => 'fid','vValue' => $this->_tpl_vars['oLv3MnEtForum']->forumId->oriValue), $this);?>
+                        <a href="<?php echo $this->_tpl_vars['oLv3MnEtForum']->getForumUrl(); ?>
+" title="<?php echo ((is_array($_tmp=$this->_tpl_vars['oLv3MnEtForum']->getForumUrlTitle())) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 "><?php echo ((is_array($_tmp=$this->_tpl_vars['oLv3MnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </a>, 
                             <?php $_from = $this->_tpl_vars['oLv3MnEtForum']->objsSubMnEtForum; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['oLv4MnEtForum']):
 ?>
-                        <a href="<?php echo smarty_function_tplEchoUrl(array('mainName' => 'MainTopic.php','cmd' => 'threadList','vName' => 'fid','vValue' => $this->_tpl_vars['oLv4MnEtForum']->forumId->oriValue), $this);?>
+                        <a href="<?php echo $this->_tpl_vars['oLv4MnEtForum']->getForumUrl(); ?>
+" title="<?php echo ((is_array($_tmp=$this->_tpl_vars['oLv4MnEtForum']->getForumUrlTitle())) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 "><?php echo ((is_array($_tmp=$this->_tpl_vars['oLv4MnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </a>, 
                                 <?php $_from = $this->_tpl_vars['oLv4MnEtForum']->objsSubMnEtForum; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['oLv5MnEtForum']):
 ?>
-                        <a href="<?php echo smarty_function_tplEchoUrl(array('mainName' => 'MainTopic.php','cmd' => 'threadList','vName' => 'fid','vValue' => $this->_tpl_vars['oLv5MnEtForum']->forumId->oriValue), $this);?>
+                        <a href="<?php echo $this->_tpl_vars['oLv5MnEtForum']->getForumUrl(); ?>
+" title="<?php echo ((is_array($_tmp=$this->_tpl_vars['oLv5MnEtForum']->getForumUrlTitle())) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 "><?php echo ((is_array($_tmp=$this->_tpl_vars['oLv5MnEtForum']->forumName->oriValue)) ? $this->_run_mod_handler('escape', true, $_tmp, 'html') : smarty_modifier_escape($_tmp, 'html')); ?>
 </a>, 
                                 <?php endforeach; endif; unset($_from); ?>

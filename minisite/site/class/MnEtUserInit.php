@@ -29,6 +29,9 @@ Class MnEtUserInit Extends AppDo {
         }
         if (property_exists($recordUser, 'avatar')) {
             $oMnEtUser->iconUrl->setOriValue($recordUser->avatar);
+        } else {
+            //TODO,need define default user icon
+            
         }
         if (property_exists($recordUser, 'online')) {
             $oMnEtUser->isOnline->setOriValue($recordUser->online);

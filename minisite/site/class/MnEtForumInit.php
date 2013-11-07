@@ -36,6 +36,9 @@ Class MnEtForumInit Extends AppDo {
         if (property_exists($recordForum, 'icon')) {
             $oMnEtForum->logoUrl->setOriValue($recordForum->icon);
         }
+        if (property_exists($recordForum, 'link_url')) {
+            $oMnEtForum->url->setOriValue($recordForum->link_url);
+        }
         if (property_exists($recordForum, 'unread_num')) {
             $oMnEtForum->unreadTopicNum->setOriValue($recordForum->unread_num);
         }

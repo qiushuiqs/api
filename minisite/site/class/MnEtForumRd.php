@@ -30,7 +30,7 @@ Class MnEtForumRd Extends AppDo {
             $objsMnEtForum = $oMnEtForumInit->initObjsMnEtForumByRecords(json_decode($data));
             return $objsMnEtForum;
         } else {
-            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_TOP);
+            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_HIGH);
         }
     }
     

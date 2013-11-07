@@ -1,12 +1,11 @@
 <?php
 /** 
- * mysql基本数据库类，类对象初始化时没有连接到数据库 
- * 这个类将被废除，用AppDbi类取代
+ * mysqli基本数据库类，类对象初始化时没有连接到数据库 
  * 
- * @since  2010-1-1
+ * @since  2013-8-25
  * @author Wu ZeTao <578014287@qq.com>
  */
-Class AppDb {
+Class AppDbi {
     
     /* 数据库名 */
     var $db_name;
@@ -51,10 +50,10 @@ Class AppDb {
      * 打开一个到数据库服务器和数据库的连接，设置并返回数据库连接标识$this->link_id
      */
     function connect() {
-        $this->link_id = mysql_connect($this->db_server_address,$this->db_user,$this->db_password) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Connect db fail!', ERR_TOP);
+        $this->link_id = mysqli_connect($this->db_server_address,$this->db_user,$this->db_password) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Connect db fail!', ERR_TOP);
         $sql = "set names 'utf8'";
-        mysql_query($sql, $this->link_id) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Can not set names!<br>' . mysql_errno() . ": " . mysql_error(), ERR_TOP);
-        mysql_select_db($this->db_name, $this->link_id) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Select db fail!', ERR_TOP);
+        mysqli_query($this->link_id, $sql) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Can not set names!<br>' . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
+        mysqli_select_db($this->link_id, $this->db_name) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Select db fail!', ERR_TOP);
         return $this->link_id;
     }
 
@@ -69,7 +68,7 @@ Class AppDb {
         if (!$this->link_id) {
             $this->connect();
         }
-        $this->result=mysql_query($sql, $this->link_id) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . "Query fail!$info<br>" . mysql_errno() . ": " . mysql_error(), ERR_TOP);
+        $this->result=mysqli_query($this->link_id, $sql) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . "Query fail!$info<br>" . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
         $this->row_number=0;
         return $this->result;
     }
@@ -82,7 +81,10 @@ Class AppDb {
      * @param  String  $info  回滚报错信息
      */
     function doAffairQuery($sql, $info) {
-        $this->result=mysql_query($sql, $this->link_id) or $this->rollback($info);
+        if (!$this->link_id) {
+            $this->connect();
+        }
+        $this->result=mysqli_query($this->link_id, $sql) or $this->rollback($info);
         $this->row_number=0;
         return $this->result;
     }
@@ -91,9 +93,10 @@ Class AppDb {
      * 提取并返回select查询结果集$this->result中的一行记录$this->record，
      * 并使数据库记录指针$this->row_number移向下一个记录（如果还有记录的话）
      */
-    function getOneRecord() {
+    function getOneRecord($result) {    
         /* 对mysql_fetch_array()函数，如果结果中的两个或以上的列具有相同字段名，最后一列将优先。要访问同名的其它列，必须用该列的数字索引或给该列起个别名。对有别名的列，不能再用原来的列名访问其内容。 */
-        if($this->record=mysql_fetch_array($this->result))
+        //if($this->record=mysqli_fetch_array($this->result))
+        if($this->record=mysqli_fetch_array($result)) 
             $this->row_number+=1;
         return $this->record;
     }
@@ -106,34 +109,37 @@ Class AppDb {
      * row_number的取值范围应该从0到mysql_num_rows-1。 
      * 注:mysql_data_seek()只能和mysql_query()结合起来使用，而不能用于mysql_unbuffered_query()。 
      */
-    function doSeek($row_number) {
-        if (mysql_data_seek($this->result,$row_number))
+    function doSeek($result, $row_number) {     //不可直接使用$this->result，防止多次查询result冲突问题。
+        //if (mysqli_data_seek($this->result,$row_number))
+        if (mysqli_data_seek($result,$row_number))
             return ($this->row_number = $row_number);
         else
-            Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Seek fail!<br>' . mysql_errno() . ": " . mysql_error(), ERR_TOP);
+            Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Seek fail!<br>' . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
     }
 
     /**
      * 返回最近一次与连接标识$this->link_id关联的INSERT，UPDATE或DELETE 查询所影响的记录行数
      */
     function getAffectedRows() {
-        $affected_rows=mysql_affected_rows($this->link_id);
+        $affected_rows=mysqli_affected_rows($this->link_id);
         return $affected_rows;
     }
 
     /**
      * 返回资源标识符$this->result所标识的结果集中行的数目。此命令仅对SELECT语句有效
      */
-    function getNumRows() {
-        $num_rows=mysql_num_rows($this->result);
+    function getNumRows($result) {     //不可直接使用$this->result，防止多次查询result冲突问题。
+        //$num_rows=mysqli_num_rows($this->result);
+        $num_rows=mysqli_num_rows($result);
         return $num_rows;
     }
 
     /**
      * 取得结果集中字段的数目
      */
-    function getNumFields() {
-        $num_fields=mysql_num_fields($this->result);
+    function getNumFields($result) {   //不可直接使用$this->result，防止多次查询result冲突问题。
+        //$num_fields=mysqli_num_fields($this->result);
+        $num_fields=mysqli_num_fields($result);
         return $num_fields;
     }
       
@@ -148,8 +154,8 @@ Class AppDb {
      * 返回给定的数据库连接标识$this->link_id中上一步INSERT查询中产生的AUTO_INCREMENT的ID号
      */
     function getLastInsertId() {
-        $this->doQuery('select last_insert_id() as last_insert_id');
-        $row = $this->getOneRecord();
+        $result = $this->doQuery('select last_insert_id() as last_insert_id');
+        $row = $this->getOneRecord($result);
         $last_insert_id=$row['last_insert_id'];
         return $last_insert_id;
     }
@@ -157,8 +163,10 @@ Class AppDb {
     /**
      * 释放所有与资源标识符$this->result所关联的内存
      */
-    function freeResult() {
-        mysql_free_result($this->result) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Free result fail!<br>' . mysql_errno() . ": " . mysql_error(), ERR_TOP);
+    function freeResult($result) {     //不可直接使用$this->result，防止多次查询result冲突问题。
+        //mysqli_free_result($this->result) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Free result fail!<br>' . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
+        //Note: You should always free your result with mysqli_free_result(), when your result object is not needed anymore. 
+        mysqli_free_result($result) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Free result fail!<br>' . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
     }
 
     /**
@@ -169,7 +177,7 @@ Class AppDb {
             $this->connect();
         }
         $sql = 'begin';
-        mysql_query($sql, $this->link_id) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Begin affair fail!<br>' . mysql_errno() . ": " . mysql_error(), ERR_TOP);
+        mysqli_query($this->link_id, $sql) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Begin affair fail!<br>' . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
     }
 
     /**
@@ -177,7 +185,7 @@ Class AppDb {
      */
     function rollback($info = '') {
         $sql = 'rollback';
-        mysql_query($sql, $this->link_id) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . "Rollback fail!$info<br>" . mysql_errno() . ": " . mysql_error(), ERR_TOP);
+        mysqli_query($this->link_id, $sql) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . "Rollback fail!$info<br>" . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
     }
 
     /**
@@ -185,7 +193,7 @@ Class AppDb {
      */
     function commitAffair() {
         $sql = 'commit';
-        mysql_query($sql, $this->link_id) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Commit affair fail!<br>' . mysql_errno() . ": " . mysql_error(), ERR_TOP);
+        mysqli_query($this->link_id, $sql) or Error::alert('db', __METHOD__ . ',line:' . __LINE__ . '.' . 'Commit affair fail!<br>' . mysqli_errno($this->link_id) . ": " . mysqli_error($this->link_id), ERR_TOP);
     }
     
     /**
@@ -198,7 +206,35 @@ Class AppDb {
         if (!$this->link_id) {
             $this->connect();
         }
-        return '\'' . mysql_real_escape_string($value, $this->link_id) . '\'';
+        return '\'' . mysqli_real_escape_string($this->link_id, $value) . '\'';
+    }
+    
+    /**
+     * 根据数组参数返回被逗号分隔并且每个数组元素被单引号括起来的字符串,用于sql语句中的in条件。
+     *
+     * @param  $arr  数组参数
+     * @return  Mixed  如果没有错误则返回字符串，否则返回false
+     */
+    public function getSqlIn($arr) {
+        $sqlIn = '';
+        if (is_array($arr)) {
+            if (count($arr) > 0) {
+                $flag = true;   /* 第一个数组元素标记 */
+                foreach ($arr as $value) {
+                    if ($flag) {
+                        $sqlIn .= $this->quote($value);   /* 必须使用addslashes转义并且用单引号引起来 */
+                        $flag = false;
+                    } else {
+                        $sqlIn .= ", ".$this->quote($value);
+                    }
+                }
+                return $sqlIn;
+            } else {
+                return false;   /* 数组中没有数组项 */
+            }
+        } else {
+            return false;  /* 参数错误，参数必须是数组 */
+        }
     }
     
 

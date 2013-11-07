@@ -57,19 +57,22 @@ Abstract Class MainBase extends MainApp {
             if (property_exists($data, 'version') && $data->version) {
                 $tapatalkPluginApiConfig['apiConfig'] = $data;
             } else {
-                Error::alert('needApiVersion', __METHOD__ . ',line:' . __LINE__ . '.' . "Can not find api version.", ERR_TOP);
+                Error::alert('needApiVersion', __METHOD__ . ',line:' . __LINE__ . '.' . "Can not find api version.", ERR_HIGH);
             }
         } else {
-            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_TOP);
+            Error::alert(MPF_SITE_API_ERROR, __METHOD__ . ',line:' . __LINE__ . '.' . $oMnCommon->getApiErrorStr($data), ERR_HIGH);
         }
         if (!$tapatalkPluginApiConfig['nativeSitePcModeUrl']) {
-            //TODO for different type site
+            //TODO cases
             if (self::apiIsVanilla2Site()) {
                 $tapatalkPluginApiConfig['nativeSitePcModeUrl'] = $tapatalkPluginApiConfig['nativeSiteUrl'].'profile/nomobile';
             } elseif (self::apiIsVbulletin3Site()) {
                 $tapatalkPluginApiConfig['nativeSitePcModeUrl'] = $tapatalkPluginApiConfig['nativeSiteUrl'].'index.php?exttMbqNoMobile=1';
+                if ($tapatalkPluginApiConfig['apiConfig']->sys_version < '3.8.7') { //only support >= vb387p3 version
+                    Error::alert('invalidSysVersion', "Sorry,minisite feature only support vb3.8.7 or higher version now.", ERR_HIGH);
+                }
             } else {
-                Error::alert('unknownTypeSite', __METHOD__ . ',line:' . __LINE__ . '.' . "Unknown type site.", ERR_TOP);
+                Error::alert('unknownTypeSite', __METHOD__ . ',line:' . __LINE__ . '.' . "Unknown type site.", ERR_HIGH);
             }
         }
         self::assign('tapatalkPluginApiConfig', self::$tapatalkPluginApiConfig);

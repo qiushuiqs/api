@@ -27,10 +27,10 @@ Class MainTopic extends MainBase {
         /* do */
         $param = array(
             'fid' => $_GET['fid'],
-            'content' => $_GET['content'] ? $_GET['content'] : 'topic',
+            'content' => $_GET['content'] ? $_GET['content'] : 'both',
             'page' => $_GET['page'] ? $_GET['page'] : MPF_SITE_DEFAULT_PAGE_NUM,
             'perpage' => $_GET['perpage'] ? $_GET['perpage'] : MPF_SITE_DEFAULT_PER_PAGE_NUM,
-            'type' => $_GET['type'] ? $_GET['type'] : 'normal',
+            'type' => $_GET['type'] ? $_GET['type'] : 'all',
             'prefix' => $_GET['prefix'] ? $_GET['prefix'] : 0
         );
         $oMnEtForumTopicRd = MainApp::$oClk->newObj('MnEtForumTopicRd');

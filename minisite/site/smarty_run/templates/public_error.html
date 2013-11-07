@@ -1,3 +1,7 @@
+<html>
+<head>
+</head>
+<body>
 {* 内嵌于模板的错误信息 *}
 {if $hasErr}    {* 错误信息 *}
 <div style="border:1px #ff0000 solid;padding:4px">
@@ -15,6 +19,7 @@
         <div>{$oErrorInfo->errValue|escape:html}</div>
         {/foreach}
     </div>
-    <br>
     {/if}
 {/if}
+</body>
+</html>
