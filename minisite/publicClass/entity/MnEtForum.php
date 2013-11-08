@@ -30,7 +30,7 @@ Class MnEtForum extends MbqEtForum {
             } elseif ($this->isProtected->oriValue) {
                 //TODO cases
                 if (MainBase::apiIsVbulletin3Site()) {
-                    return MainBase::$tapatalkPluginApiConfig['nativeSiteUrl'].'forumdisplay.php?f='.$this->forumId->oriValue;
+                    return MainBase::$tapatalkPluginApiConfig['nativeSiteUrl'].'forumdisplay.php?f='.$this->forumId->oriValue.'&exttMbqNoMobile=1';
                 } else {
                     Error::alert('unknownTypeSite', __METHOD__ . ',line:' . __LINE__ . '.' . "Unknown type site.", ERR_HIGH);
                 }
