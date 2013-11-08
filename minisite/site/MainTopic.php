@@ -82,7 +82,7 @@ Class MainTopic extends MainBase {
         }
     }
     
-    public function cmEnd() {
+    public static function cmEnd($oMain = NULL, $opt = array()) {
         parent::cmEnd();
     }
     
@@ -90,7 +90,7 @@ Class MainTopic extends MainBase {
 
 $html = new MainTopic();
 $html->run();
-$html->cmEnd();
+MainTopic::cmEnd($html);
 $html->display();
 
 ?>

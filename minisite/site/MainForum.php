@@ -44,7 +44,7 @@ Class MainForum extends MainBase {
         }
     }
     
-    public function cmEnd() {
+    public static function cmEnd($oMain = NULL, $opt = array()) {
         parent::cmEnd();
     }
     
@@ -52,7 +52,7 @@ Class MainForum extends MainBase {
 
 $html = new MainForum();
 $html->run();
-$html->cmEnd();
+MainForum::cmEnd($html);
 $html->display();
 
 ?>

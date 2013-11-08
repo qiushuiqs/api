@@ -10,7 +10,8 @@
 ini_set('display_errors','1');
 ini_set('display_startup_errors','1');
 //error_reporting(E_ALL);
-error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 set_time_limit(60);
 mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
