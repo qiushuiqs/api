@@ -55,8 +55,8 @@ define('MPF_C_APP_WRPUBLIC_PATH', $oCf->getPath('../wrDir/public/'.strtolower(MP
 define('MPF_C_APP_WRPUBLIC_URL', '../wrDir/public/'.strtolower(MPF_C_APPNAME).'/');    /* 模块公共写目录web路径 */
 define('MPF_C_APP_DB_CONNECTION_TYPE', 'mysqli');    /* db连接类型（mysql/mysqli） */
 define('MPF_C_APP_TBPREFIX', 'mpf_');    /* 数据库表名前缀 */
-define('MPF_C_TIMEZONE', 'PRC');    /* 时区 */
-date_default_timezone_set(MPF_C_TIMEZONE);
+//define('MPF_C_TIMEZONE', 'PRC');    /* 时区 */
+//date_default_timezone_set(MPF_C_TIMEZONE);
 /* 其他 */
 
 /* 包含翻译文件 */

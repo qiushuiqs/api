@@ -12,6 +12,8 @@ Class MnEtUser extends MbqEtUser {
     
     public function __construct() {
         parent::__construct();
+        //set default avatar
+        $this->iconUrl->setOriValue(MPF_C_APP_IMG_URL.'default_avatar.png');
     }
     
     /**
