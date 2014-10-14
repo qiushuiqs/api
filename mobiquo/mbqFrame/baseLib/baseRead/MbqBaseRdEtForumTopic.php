@@ -163,6 +163,12 @@ Abstract Class MbqBaseRdEtForumTopic extends MbqBaseRd {
         } else {
             $data['can_move'] = (boolean) MbqBaseFdt::getFdt('MbqFdtForum.MbqEtForumTopic.canMove.default');
         }
+        if ($oMbqEtForumTopic->isMoved->hasSetOriValue()) {
+            $data['is_moved'] = (boolean) $oMbqEtForumTopic->isMoved->oriValue;
+            if ($data['is_moved'] && $oMbqEtForumTopic->realTopicId->hasSetOriValue()){
+                $data['topic_id'] = (string) $oMbqEtForumTopic->realTopicId->oriValue;
+            }
+        }
         if ($oMbqEtForumTopic->modByUserId->hasSetOriValue()) {
             $data['moderated_by_id'] = (string) $oMbqEtForumTopic->modByUserId->oriValue;
         }
